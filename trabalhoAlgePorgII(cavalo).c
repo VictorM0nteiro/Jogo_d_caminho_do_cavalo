@@ -11,5 +11,5 @@
     };
 
     int main(){
-        printf("Bom dia amiguinhos!(.)(.)(|)\n");
+        printf("Bom dia amiguinhoooooos!(.)(.)(|)\n");
     }
