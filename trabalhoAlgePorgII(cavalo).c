@@ -7,5 +7,9 @@
     //movimentos possíveis do cavalo no xadrez, primeiro número indica o movimento vertical e o segundo o movimento horizontal
     int movimentosCavalo[8][2] = {
         {2,1}, {1,2}, {-1,2}, {-2, 1},
-        {-2, -1}, {-1, -2}, {-2, 1}, {2,1};
+        {-2, -1}, {-1, -2}, {-2, 1}, {2,1}
+    };
+
+    int main(){
+        printf("Bom dia amiguinhos!(.)(.)(|)\n");
     }
