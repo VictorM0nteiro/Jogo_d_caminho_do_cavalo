@@ -1,3 +1,13 @@
+/*
+JOGO DO CAMINHO DO CAVALO - Algorítmos e Programação II
+
+Integrantes do grupo:
+
+Matheus Nascimento Leite
+Victor Hugo Monteiro
+Luccas Asaphe Pena Salomão
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
