@@ -21,6 +21,7 @@
     }
 
     int main(){
+<<<<<<< HEAD
         int N = 4;
         int tabuleiro[4][4] = {0};
         
@@ -28,4 +29,7 @@
 
         imprimirTabuleiro((int*)tabuleiro, N);
         //printf("Bom dia amiguinhos!(.)(.)(|)\n");
+=======
+        printf("Bom dia amiguinhoooooos!(.)(.)(|)\n");
+>>>>>>> f86180226c826e9a3d26d55e6b8bf4242489a2b1
     }
