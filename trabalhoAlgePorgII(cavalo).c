@@ -1,3 +1,13 @@
+/*
+JOGO DO CAMINHO DO CAVALO - Algorítmos e Programação II
+
+Integrantes do grupo:
+
+Matheus Nascimento Leite
+Victor Hugo Monteiro
+Luccas Asaphe Pena Salomão
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -17,7 +27,9 @@ void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
 }
 
 //funcao para verificar se a nova posicao que o cavalo pode assumir eh valida
-int movimento_valido(int nova_linha, int nova_coluna, int tabuleiro[TAMANHO][TAMANHO]){
+int movimento_valido(int *P, int nova_linha, int nova_coluna, int tabuleiro[TAMANHO][TAMANHO]){
+    nova_linha = (P-&tabuleiro[0][0])/TAMANHO + nova_linha; // essa conta nos da o resultado da linha atual (P-&tabuleiro[0][0])/TAMANHO) somado com o deslocamento ( nova_linha)
+    nova_coluna = (P-&tabuleiro[0][0])%TAMANHO + nova_coluna;// essa conta nos da o resultado da coluna atual (P-&tabuleiro[0][0])%TAMANHO) somado com o deslocamento ( nova_coluna)
     //nova_linha e nova_coluna tem que ser positivo pois se nao pode acessar uma posicao de memoria indevida
     if(nova_linha >=0 && nova_linha < TAMANHO && nova_coluna >=0 && nova_coluna < TAMANHO && tabuleiro[nova_linha][nova_coluna] == 0) {
         return 1; //a nova posicao eh valida
@@ -57,7 +69,7 @@ int main(){
         printf("Tabuleiro atual: \n");
         imprime_tabuleiro(tabuleiro);
 
-        printf("\nMovimentos validos:\n");
+        printf("\nMovimentos validos: \n");
         int movimento_valido_encontrado = 0;
         int movimentos_validos[8][2] = {0};
         int total_movimentos_validos = 0;
@@ -66,12 +78,14 @@ int main(){
         for (int i = 0; i < 8; i++)
         {
             //criando as variavies que vao receber as novas posicoes que o cavalo pode assumir
-            int nova_linha = cavalo_linha + movimentos_Cavalo[i][0];
-            int nova_coluna = cavalo_coluna + movimentos_Cavalo[i][1];
+            int nova_linha =  movimentos_Cavalo[i][0];
+            int nova_coluna = movimentos_Cavalo[i][1];
 
             //precisamos verificar se a nova posicao eh valida (esta dentro do tabuleiro e se a posicao nao foi preenchida ainda)
-            if(movimento_valido(nova_linha, nova_coluna, tabuleiro)){
+            if(movimento_valido(P,nova_linha, nova_coluna, tabuleiro)){
                 movimento_valido_encontrado = 1;
+                nova_linha = (P-&tabuleiro[0][0])/TAMANHO + nova_linha; // essa conta nos da o resultado da linha atual (P-&tabuleiro[0][0])/TAMANHO) somado com o deslocamento ( nova_linha)
+                nova_coluna = (P-&tabuleiro[0][0])%TAMANHO + nova_coluna;// essa conta nos da o resultado da coluna atual (P-&tabuleiro[0][0])%TAMANHO) somado com o deslocamento ( nova_coluna)
                 movimentos_validos[total_movimentos_validos][0] = nova_linha;
                 movimentos_validos[total_movimentos_validos][1] = nova_coluna;
                 total_movimentos_validos++;
@@ -81,7 +95,7 @@ int main(){
 
         //se não tiver mais movimentos o player perde e encerra o programa
         if(!movimento_valido_encontrado){
-            printf("Você perdeu! Não possui mais movimentos!\n");
+            printf("Voce perdeu! Nao possui mais movimentos!\n");
             break; // break pois estamos dentro do while
         }
 
@@ -94,10 +108,24 @@ int main(){
             continue;
         }
 
-    }
-    
-    
-    
+        //atualizando a posicao do cavalo
+        // int nova_linha = movimentos_validos[escolha-1][0];
+        // int nova_coluna = movimentos_validos[escolha-1][1];
+        // P = &tabuleiro[nova_linha][nova_coluna];
+        // tabuleiro[nova_linha][nova_coluna] = ++cont_casas; //colocando o cavalo no tabuleiro
+        
+        //atualizando a posicao do cavalo 2.0
+        cavalo_linha = movimentos_validos[escolha-1][0]; // otimizei essa parte com variáveis que já possuimos
+        cavalo_coluna = movimentos_validos[escolha-1][1];
+        P = (int *)(&tabuleiro[cavalo_linha][cavalo_coluna]);
+        *P = ++cont_casas; //colocando o cavalo no tabuleiro // diminuir um pouco de codigo utilizando a desrefrenciação
 
+        //verificando se o usuario venceu
+        if(cont_casas == TAMANHO*TAMANHO){
+            printf("Voce ganhou! Todas as casas foram preenchidas!\n");
+            break;
+        }
+
+    }
     return 0;
 }
