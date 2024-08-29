@@ -52,10 +52,15 @@ int main(){
     //criando um contador de casas preenchidas para verificar se o usuário ganhou ou perdeu
     int cont_casas=1;
 
-    // while (1)
-    // {
+     while (1)
+    {
         printf("Tabuleiro atual: \n");
         imprime_tabuleiro(tabuleiro);
+
+        printf("\nMovimentos validos:\n");
+        int movimento_valido_encontrado = 0;
+        int movimentos_validos[8][2] = {0};
+        int total_movimentos_validos = 0;
 
         //definindo os movimentos possíveis a partir da posicao atual do cavalo
         for (int i = 0; i < 8; i++)
@@ -66,12 +71,33 @@ int main(){
 
             //precisamos verificar se a nova posicao eh valida (esta dentro do tabuleiro e se a posicao nao foi preenchida ainda)
             if(movimento_valido(nova_linha, nova_coluna, tabuleiro)){
-                printf("Valido linha: %d e coluna: %d\n",nova_linha,nova_coluna);
-
+                movimento_valido_encontrado = 1;
+                movimentos_validos[total_movimentos_validos][0] = nova_linha;
+                movimentos_validos[total_movimentos_validos][1] = nova_coluna;
+                total_movimentos_validos++;
+                printf("%d. Linha: %d, Coluna: %d\n",total_movimentos_validos,nova_linha, nova_coluna);
             }
-
         }
-    // }
+
+        //se não tiver mais movimentos o player perde e encerra o programa
+        if(!movimento_valido_encontrado){
+            printf("Você perdeu! Não possui mais movimentos!\n");
+            break; // break pois estamos dentro do while
+        }
+
+        //para escolher o próximo movimento
+        int escolha;
+        printf("Escolha o movimento de (1 a %d): ", total_movimentos_validos);
+        scanf("%d", &escolha);
+        if(escolha < 1 || escolha > total_movimentos_validos){
+            printf("\nMovimento invalido. Tente novamente.\n");
+            continue;
+        }
+
+    }
     
+    
+    
+
     return 0;
 }
