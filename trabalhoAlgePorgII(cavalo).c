@@ -17,7 +17,9 @@ void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
 }
 
 //funcao para verificar se a nova posicao que o cavalo pode assumir eh valida
-int movimento_valido(int nova_linha, int nova_coluna, int tabuleiro[TAMANHO][TAMANHO]){
+int movimento_valido(int *P, int nova_linha, int nova_coluna, int tabuleiro[TAMANHO][TAMANHO]){
+    nova_linha = (P-&tabuleiro[0][0])/TAMANHO + nova_linha; // essa conta nos da o resultado da linha atual (P-&tabuleiro[0][0])/TAMANHO) somado com o deslocamento ( nova_linha)
+    nova_coluna = (P-&tabuleiro[0][0])%TAMANHO + nova_coluna;// essa conta nos da o resultado da coluna atual (P-&tabuleiro[0][0])%TAMANHO) somado com o deslocamento ( nova_coluna)
     //nova_linha e nova_coluna tem que ser positivo pois se nao pode acessar uma posicao de memoria indevida
     if(nova_linha >=0 && nova_linha < TAMANHO && nova_coluna >=0 && nova_coluna < TAMANHO && tabuleiro[nova_linha][nova_coluna] == 0) {
         return 1; //a nova posicao eh valida
@@ -52,30 +54,62 @@ int main(){
     //criando um contador de casas preenchidas para verificar se o usuário ganhou ou perdeu
     int cont_casas=1;
 
-    // while (1)
-    // {
+     while (1)
+    {
         printf("Tabuleiro atual: \n");
         imprime_tabuleiro(tabuleiro);
+
+        printf("\nMovimentos validos:\n");
+        int movimento_valido_encontrado = 0;
+        int movimentos_validos[8][2] = {0};
+        int total_movimentos_validos = 0;
 
         //definindo os movimentos possíveis a partir da posicao atual do cavalo
         for (int i = 0; i < 8; i++)
         {
             //criando as variavies que vao receber as novas posicoes que o cavalo pode assumir
-            int nova_linha = cavalo_linha + movimentos_Cavalo[i][0];
-            int nova_coluna = cavalo_coluna + movimentos_Cavalo[i][1];
+            int nova_linha =  movimentos_Cavalo[i][0];
+            int nova_coluna = movimentos_Cavalo[i][1];
 
             //precisamos verificar se a nova posicao eh valida (esta dentro do tabuleiro e se a posicao nao foi preenchida ainda)
-            if(movimento_valido(nova_linha, nova_coluna, tabuleiro)){
-                printf("Valido linha: %d e coluna: %d\n",nova_linha,nova_coluna);
-
+            if(movimento_valido(P,nova_linha, nova_coluna, tabuleiro)){
+                movimento_valido_encontrado = 1;
+                nova_linha = (P-&tabuleiro[0][0])/TAMANHO + nova_linha; // essa conta nos da o resultado da linha atual (P-&tabuleiro[0][0])/TAMANHO) somado com o deslocamento ( nova_linha)
+                nova_coluna = (P-&tabuleiro[0][0])%TAMANHO + nova_coluna;// essa conta nos da o resultado da coluna atual (P-&tabuleiro[0][0])%TAMANHO) somado com o deslocamento ( nova_coluna)
+                movimentos_validos[total_movimentos_validos][0] = nova_linha;
+                movimentos_validos[total_movimentos_validos][1] = nova_coluna;
+                total_movimentos_validos++;
+                printf("%d. Linha: %d, Coluna: %d\n",total_movimentos_validos,nova_linha, nova_coluna);
             }
-
         }
-    // }
-    
-    
-    
 
+        //se não tiver mais movimentos o player perde e encerra o programa
+        if(!movimento_valido_encontrado){
+            printf("Voce perdeu! Neo possui mais movimentos!\n");
+            break; // break pois estamos dentro do while
+        }
 
+        //para escolher o próximo movimento
+        int escolha;
+        printf("Escolha o movimento de (1 a %d): ", total_movimentos_validos);
+        scanf("%d", &escolha);
+        if(escolha < 1 || escolha > total_movimentos_validos){
+            printf("\nMovimento invalido. Tente novamente.\n");
+            continue;
+        }
+
+        //atualizando a posicao do cavalo
+        int nova_linha = movimentos_validos[escolha-1][0];
+        int nova_coluna = movimentos_validos[escolha-1][1];
+        P = &tabuleiro[nova_linha][nova_coluna];
+        tabuleiro[nova_linha][nova_coluna] = ++cont_casas; //colocando o cavalo no tabuleiro
+
+        //verificando se o usuario venceu
+        if(cont_casas == TAMANHO*TAMANHO){
+            printf("Voce ganhou! Todas as casas foram preenchidas!\n");
+            break;
+        }
+
+    }
     return 0;
 }
