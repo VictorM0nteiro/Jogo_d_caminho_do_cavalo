@@ -42,10 +42,14 @@ int main(){
 
     // movimentos possíveis do cavalo no xadrez, primeiro número indica o movimento vertical e o segundo o movimento horizontal
     int movimentos_Cavalo[8][2] = {
-        {2, 1}, {2, -1},
-        {-2, 1}, {-2, -1},
-        {1, 2}, {1, -2},
-        {-1, 2}, {-1, -2}
+        {2, 1}, 
+        {2, -1},
+        {-2, 1},
+        {-2, -1},
+        {1, 2}, 
+        {1, -2},
+        {-1, 2},
+        {-1, -2}
     };
 
     //variaveis da posicao inicial do cavalo
