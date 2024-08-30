@@ -16,10 +16,18 @@ Luccas Asaphe Pena Salomão
 
 //funcao que imprime o tabuleiro
 void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
+    system("cls");//funcao para limpar terminal
+    printf("  ");
+    for (int i = 1; i <= TAMANHO; i++) {
+        printf("%2d ", i);
+    }
+    printf("\n");
+    char letra = 'A';
     for (int i = 0; i < TAMANHO; i++)
     {
+        printf("%c ",letra+i);
         for (int j = 0; j < TAMANHO; j++)
-        {
+        {         
             printf("%2d ",tabuleiro[i][j]);
         }
         printf("\n"); 
