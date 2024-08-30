@@ -83,7 +83,7 @@ int main(){
         imprime_tabuleiro(tabuleiro);
         printf("Posicao do cavalo: %c%d\n",('A'+((P-&tabuleiro[0][0])/TAMANHO)),((P-&tabuleiro[0][0])%TAMANHO)+1);
 
-        printf("\nMovimentos validos: \n");
+        printf("\nMover para: \n");
         int movimento_valido_encontrado = 0;
         int movimentos_validos[8][2] = {0};
         int total_movimentos_validos = 0;
@@ -103,7 +103,9 @@ int main(){
                 movimentos_validos[total_movimentos_validos][0] = nova_linha;
                 movimentos_validos[total_movimentos_validos][1] = nova_coluna;
                 total_movimentos_validos++;
-                printf("%d. Linha: %d, Coluna: %d\n",total_movimentos_validos,nova_linha, nova_coluna);
+
+                
+                printf("%d. %c%d\n",total_movimentos_validos,'A'+nova_linha, nova_coluna+1);
             }
         }
 
