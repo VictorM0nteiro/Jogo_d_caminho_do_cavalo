@@ -24,10 +24,9 @@ void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
         printf("%2d ", i);
     }
     printf("\n");
-    char letra = 'A';
     for (int i = 0; i < TAMANHO; i++)
     {
-        printf("%c ",letra+i);
+        printf("%c ",'A'+i);
         for (int j = 0; j < TAMANHO; j++)
         {         
             printf("%2d ",tabuleiro[i][j]);
