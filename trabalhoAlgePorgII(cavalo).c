@@ -17,6 +17,8 @@ Luccas Asaphe Pena Salomão
 //funcao que imprime o tabuleiro
 void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
     system("cls");//funcao para limpar terminal
+
+    //inserindo numeros e letras para deixar o tabuleiro mais intuitivo
     printf("  ");
     for (int i = 1; i <= TAMANHO; i++) {
         printf("%2d ", i);
@@ -80,6 +82,7 @@ int main(){
     {
         printf("Tabuleiro atual: \n");
         imprime_tabuleiro(tabuleiro);
+        printf("Posicao do cavalo: %c%d\n",('A'+((P-&tabuleiro[0][0])/TAMANHO)),((P-&tabuleiro[0][0])%TAMANHO)+1);
 
         printf("\nMovimentos validos: \n");
         int movimento_valido_encontrado = 0;
