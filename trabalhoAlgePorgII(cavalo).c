@@ -36,9 +36,13 @@ void imprime_tabuleiro(int tabuleiro[TAMANHO][TAMANHO]){
 }
 
 //funcao para verificar se a nova posicao que o cavalo pode assumir eh valida
-int movimento_valido(int *P, int nova_linha, int nova_coluna, int *P_tabuleiro){
-    nova_linha = (P-P_tabuleiro)/TAMANHO + nova_linha; // essa conta nos da o resultado da linha atual somado com o deslocamento ( nova_linha)
-    nova_coluna = (P-P_tabuleiro)%TAMANHO + nova_coluna;// essa conta nos da o resultado da coluna atual somado com o deslocamento ( nova_coluna)
+int movimento_valido(int *P, int desloc_linha, int desloc_coluna, int *P_tabuleiro){
+    int linha_atual = (P-P_tabuleiro)/TAMANHO;
+    int coluna_atual = (P-P_tabuleiro)%TAMANHO;
+
+    int nova_linha = linha_atual + desloc_linha; // essa conta nos da o resultado da linha atual somado com o deslocamento ( nova_linha)
+    int nova_coluna = coluna_atual + desloc_coluna;// essa conta nos da o resultado da coluna atual somado com o deslocamento ( nova_coluna)
+    
     //nova_linha e nova_coluna tem que ser positivo pois se nao pode acessar uma posicao de memoria indevida
     if(nova_linha >=0 && nova_linha < TAMANHO && nova_coluna >=0 && nova_coluna < TAMANHO && *(P_tabuleiro + nova_linha*TAMANHO+nova_coluna)==0) {
         return 1; //a nova posicao eh valida
@@ -89,6 +93,8 @@ int main(){
         imprime_tabuleiro(tabuleiro);
         printf("Posicao do cavalo: %c%d\n",('A'+((P-(P-cavalo_linha*TAMANHO))/TAMANHO)),((P-(P-cavalo_coluna))%TAMANHO)+1);
 
+        //printf("Posicao do cavalo: %c%d\n", 'A' + cavalo_linha, cavalo_coluna + 1); // sujestão de codigo, amiguitos avaliar se é valido de acordo com as exigencias 👈👈👈👈👈👈
+
         printf("\nMover para: \n");
         int movimento_valido_encontrado = 0;
         int movimentos_validos[8][2] = {0};
@@ -125,9 +131,11 @@ int main(){
 
         //para escolher o próximo movimento
         int escolha;
+        int *pont_escolha;
+        pont_escolha = &escolha;
         printf("Escolha o movimento de (1 a %d): ", total_movimentos_validos);
-        scanf("%d", &escolha);
-        if(escolha < 1 || escolha > total_movimentos_validos){
+        scanf("%d", pont_escolha);
+        if(*pont_escolha < 1 || *pont_escolha > total_movimentos_validos){
             printf("\nMovimento invalido. Tente novamente.\n");
             continue;
         }
