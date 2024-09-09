@@ -141,7 +141,8 @@ int main(){
         //atualizando a posicao do cavalo 2.0
         cavalo_linha = *(P_movimentos_validos + (escolha-1)*2);    //cavalo_linha = movimentos_validos[escolha-1][0]; // otimizei essa parte com variáveis que já possuimos
         cavalo_coluna = *(P_movimentos_validos + (escolha-1)*2 + 1);    //cavalo_coluna = movimentos_validos[escolha-1][1];
-        P += cavalo_linha * TAMANHO + cavalo_coluna;//P = (int *)(&tabuleiro[cavalo_linha][cavalo_coluna]);
+        P = P_tabuleiro + (cavalo_linha * TAMANHO + cavalo_coluna);
+        //P = (int *)(&tabuleiro[cavalo_linha][cavalo_coluna]);
         *P = ++cont_casas; //colocando o cavalo no tabuleiro // diminuir um pouco de codigo utilizando a desrefrenciação
 
         //verificando se o usuario venceu
